@@ -26,6 +26,9 @@ def print_tile_data(tile_types, tile_values):
 
 
 def DP(n, H, tile_types, tile_values):
+    if n == 0 or H <= 0:
+        return False
+
     dp = [
         [{"health": -1, "protection": False, "multiplier": False} for _ in range(n)]
         for _ in range(n)
