@@ -3,7 +3,7 @@ import scipy
 
 
 def load_input_file(file_name):
-    with open(file_name, 'r') as file:
+    with open(file_name, "r") as file:
         n, H = map(int, file.readline().split())
         tile_types = np.zeros((n, n), dtype=int)
         tile_values = np.zeros((n, n), dtype=int)
@@ -26,21 +26,55 @@ def print_tile_data(tile_types, tile_values):
 
 
 def DP(n, H, tile_types, tile_values):
-    # TODO
-    # Placeholder function - implement your logic here
-    # Your code to check whether it is possible to reach the bottom-right
-    # corner without running out of HP should go here.
-    # You should use dynamic programming to solve the problem.
-    # Return True if possible, False otherwise.
+    dp = [
+        [{"health": -1, "protection": False, "multiplier": False} for _ in range(n)]
+        for _ in range(n)
+    ]
+    dp[0][0]["health"] = H
 
-    # By defualt we return False
-    # TODO you should change this
-    res = False
-    return res
+    for i in range(n):
+        for j in range(n):
+            if i > 0:
+                update_states(
+                    dp[i - 1][j], dp[i][j], tile_types[i][j], tile_values[i][j]
+                )
+            if j > 0:
+                update_states(
+                    dp[i][j - 1], dp[i][j], tile_types[i][j], tile_values[i][j]
+                )
+
+    return dp[-1][-1]["health"] >= 0
+
+
+def update_states(prev_state, curr_state, t, v):
+    if prev_state["health"] < 0:
+        return
+
+    health = prev_state["health"]
+    protection = prev_state["protection"]
+    multiplier = prev_state["multiplier"]
+
+    if t == 0:  # damage
+        if protection:
+            protection = False
+        else:
+            health -= v
+    elif t == 1:  # healing
+        health += v * (2 if multiplier else 1)
+        multiplier = False
+    elif t == 2:  # protection
+        protection = True
+    elif t == 3:  # multiplier
+        multiplier = True
+
+    if health > curr_state["health"]:
+        curr_state["health"] = health
+        curr_state["protection"] = protection
+        curr_state["multiplier"] = multiplier
 
 
 def write_output_file(output_file_name, result):
-    with open(output_file_name, 'w') as file:
+    with open(output_file_name, "w") as file:
         file.write(str(int(result)))
 
 
@@ -55,6 +89,7 @@ def main(input_file_name):
 
 if __name__ == "__main__":
     import sys
+
     if len(sys.argv) != 2:
         print("Usage: python kill_Down_with_Trojans.py a_file_name.txt")
     else:
