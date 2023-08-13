@@ -1,7 +1,7 @@
-guard_only_15: Time Limit Exceeded (Terminated)
-guard_only_14: Time Limit Exceeded (Terminated)
-guard_only_16: Time Limit Exceeded (Terminated)
-guard_only_17: Time Limit Exceeded (Terminated)
+guard_only_15: Correct Answer!
+guard_only_14: Correct Answer!
+guard_only_16: Correct Answer!
+guard_only_17: Correct Answer!
 guard_only_13: Correct Answer!
 guard_only_12: Correct Answer!
 no_special_tile_8: Correct Answer!
@@ -99,4 +99,4 @@ guard_only_19: Correct Answer!
 guard_only_18: Correct Answer!
 no_special_tile_14: Correct Answer!
 =========== Summary ==========
-Passed 89 / 100 test cases.
+Passed 93 / 100 test cases.
