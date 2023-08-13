@@ -20,6 +20,8 @@ __pycache__/
 *.pyo
 *.pyd
 
+/auto_log_py.txt
+
 # Virtual environment directories
 venv/
 env/
